@@ -21,6 +21,8 @@ export default class CertificateExpiration extends BaseService {
     '/certificate/expiration/{hostname}': {
       get: {
         summary: 'Certificate Expiration',
+        description:
+          "Checks the number of days before a website's SSL certificate expires",
         parameters: [
           pathParam({ name: 'hostname', example: 'shields.io' }),
           queryParam({
@@ -41,8 +43,6 @@ export default class CertificateExpiration extends BaseService {
       },
     },
   }
-
-  static _cacheLength = 0
 
   async fetch({ hostname }) {
     trace.logTrace('outbound', emojic.womanCook, 'trying', hostname)
@@ -84,7 +84,7 @@ export default class CertificateExpiration extends BaseService {
       const dangerThreshold =
         new Date().getTime() + dangerDays * 24 * 60 * 60 * 1000
       const message = expires.toISOString().slice(0, 10)
-      let color = 'green'
+      let color = 'brightgreen'
       if (expires.getTime() < dangerThreshold) {
         color = 'red'
       } else if (expires.getTime() < warningThreshold) {

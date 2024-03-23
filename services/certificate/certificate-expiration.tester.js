@@ -18,7 +18,7 @@ t.create('Certificate Expiration: good, green')
   .get('/shields.io.json?warningDays=0&dangerDays=0')
   .expectBadge({
     label: 'shields.io',
-    color: 'green',
+    color: 'brightgreen',
     message: Joi.string().regex(/\d{4}-\d{2}-\d{2}/),
   })
 
